@@ -32,7 +32,42 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.board-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-row {
+  display: flex;
+}
+
+.board-cell {
+  width: 10px;
+  height: 10px;
+  border: 1px solid red;
+  padding: 2rem;
+}
+
+.board-snake-filled {
+  width: 10px;
+  height: 10px;
+  padding: 2rem;
+  border: 1px solid green;
+  background: green;
+}
+
+.board-food-filled {
+  width: 10px;
+  height: 10px;
+  padding: 2rem;
+  border: 1px solid orange;
+  background: orange;
 }
