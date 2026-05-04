@@ -74,7 +74,7 @@ const inValidCell = (row, col) => {
   return isInValidRow || isInValidCol
 }
 
-const isSnakeAndFoodSameCell = (snake, food) => {
+const isSnakeAndFoodSharesSameCell = (snake, food) => {
   console.log(snake, food)
   return snake.toString() === food.toString()
 }
@@ -91,7 +91,7 @@ function App() {
     const onPressArrow = (event) => {
       const updatedSnakePosition = getUpdatedDirection(event.key, currentSnakeRow, currentSnakeCol)
       const [updatedRow, updatedCol] = updatedSnakePosition
-      if (isSnakeAndFoodSameCell(snake, food) || inValidCell(updatedRow, updatedCol)) {
+      if (isSnakeAndFoodSharesSameCell(snake, food) || inValidCell(updatedRow, updatedCol)) {
         return alert('Sorry! Game Over')
       }
       setSnake(updatedSnakePosition)
