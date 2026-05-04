@@ -120,14 +120,14 @@ function App() {
         setFood(startFoodAtRandomCell(linkedList))
         setScore(prev => prev + 1)
       } else {
-        let currentNode = linkedList.head
-        while (currentNode.next && currentNode.next.next) {
-          currentNode = currentNode.next
-        }
-        currentNode.next = null
+        // remove the tail node
+       let currentNode = linkedList.head
+       while (currentNode.next && currentNode.next.next) {
+        currentNode = currentNode.next
+       }
+       currentNode.next = null
       }
-
-      setSnake(linkedList)
+     setSnake(linkedList)
     }
     document.addEventListener('keydown', onPressArrow);
     return () => {
