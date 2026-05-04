@@ -19,8 +19,8 @@ class Node {
 }
 
 class LinkedList {
-  constructor() {
-    this.head = null
+  constructor(head) {
+    this.head = head
   }
   add(value) {
     if (this.head == null) {
@@ -60,7 +60,7 @@ const startFoodAtRandomCell = (snake) => {
   const row = getValidCell(1000)
   const col = getValidCell(1000)
   const currentFood = [row, col]
-  if (snake.toString() === currentFood.toString()) {
+  if (snake.head.value.toString() === currentFood.toString()) {
     return startFoodAtRandomCell(snake)
   }
   return currentFood
@@ -69,7 +69,9 @@ const startFoodAtRandomCell = (snake) => {
 const startSnakeAtRandomCell = () => {
   const row = getValidCell(1000)
   const col = getValidCell(1000)
-  return new Node([row, col])
+  const linkedList = new LinkedList()
+  linkedList.add([row, col])
+  return linkedList
 }
 
 const getUpdatedDirection = (direction, row, col) => {
@@ -93,7 +95,6 @@ const inValidCell = (row, col) => {
 }
 
 const isSnakeAndFoodSharesSameCell = (snake, food) => {
-  console.log(snake, food)
   return snake.toString() === food.toString()
 }
 
@@ -105,14 +106,28 @@ function App() {
 
 
   useEffect(() => {
-    const [currentSnakeRow, currentSnakeCol] = snake
+    const [currentSnakeRow, currentSnakeCol] = snake.head.value
     const onPressArrow = (event) => {
       const updatedSnakePosition = getUpdatedDirection(event.key, currentSnakeRow, currentSnakeCol)
       const [updatedRow, updatedCol] = updatedSnakePosition
-      if (isSnakeAndFoodSharesSameCell(snake, food) || inValidCell(updatedRow, updatedCol)) {
+      if (inValidCell(updatedRow, updatedCol)) {
         return alert('Sorry! Game Over')
       }
-      setSnake(updatedSnakePosition)
+      const newHead = new Node(updatedSnakePosition)
+      newHead.next = snake.head
+      const linkedList = new LinkedList(newHead)
+      if (isSnakeAndFoodSharesSameCell(updatedSnakePosition, food)) {
+        setFood(startFoodAtRandomCell(linkedList))
+        setScore(prev => prev + 1)
+      } else {
+        let currentNode = linkedList.head
+        while (currentNode.next && currentNode.next.next) {
+          currentNode = currentNode.next
+        }
+        currentNode.next = null
+      }
+
+      setSnake(linkedList)
     }
     document.addEventListener('keydown', onPressArrow);
     return () => {
@@ -127,11 +142,13 @@ function App() {
   }
 
 
-
-
   const getBoardCell = (col) => {
-    if (snake.toString() === col.toString()) {
-      return 'board-snake-filled'
+    let currentNode = snake.head
+    while (currentNode) {
+      if (currentNode.value.toString() === col.toString()) {
+        return 'board-snake-filled'
+      }
+      currentNode = currentNode.next
     }
     if (food.toString() === col.toString()) {
       return 'board-food-filled'
