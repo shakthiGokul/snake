@@ -111,7 +111,7 @@ function App() {
       const updatedSnakePosition = getUpdatedDirection(event.key, currentSnakeRow, currentSnakeCol)
       const [updatedRow, updatedCol] = updatedSnakePosition
       if (inValidCell(updatedRow, updatedCol)) {
-        return alert('Sorry! Game Over')
+        return alert(`$Sorry! Game Over ${score}`)
       }
       const newHead = new Node(updatedSnakePosition)
       newHead.next = snake.head
