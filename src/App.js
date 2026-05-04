@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 const BOARD_SIZE = 9
 
 const KEYBOARD_ARROW_DIRECTION = {
-  RIGHT: 'RIGHT',
-  LEFT: 'LEFT',
-  UP: 'UP',
-  DOWN: 'DOWN'
+  RIGHT: 'ArrowRight',
+  LEFT: 'ArrowLeft',
+  UP: 'ArrowUp',
+  DOWN: 'ArrowDown'
 }
 
 class Node {
@@ -65,7 +65,18 @@ const getUpdatedDirection = (direction, row, col) => {
   else if (direction === KEYBOARD_ARROW_DIRECTION.RIGHT) {
     return [row, col + 1]
   }
-  return
+  return [null, null]
+}
+
+const inValidCell = (row, col) => {
+  const isInValidRow = row < 0 || row > BOARD_SIZE - 1
+  const isInValidCol = col < 0 || col > BOARD_SIZE - 1
+  return isInValidRow || isInValidCol
+}
+
+const isSnakeAndFoodSameCell = (snake, food) => {
+  console.log(snake, food)
+  return snake.toString() === food.toString()
 }
 
 function App() {
@@ -75,19 +86,23 @@ function App() {
   const [food, setFood] = useState(startFoodAtRandomCell(snake))
 
 
-
   useEffect(() => {
     const [currentSnakeRow, currentSnakeCol] = snake
-    const onPressArrow = (direction) => {
-      const updatedSnakePosition = getUpdatedDirection(direction, currentSnakeRow, currentSnakeCol)
+    const onPressArrow = (event) => {
+      const updatedSnakePosition = getUpdatedDirection(event.key, currentSnakeRow, currentSnakeCol)
+      const [updatedRow, updatedCol] = updatedSnakePosition
+      if (isSnakeAndFoodSameCell(snake, food) || inValidCell(updatedRow, updatedCol)) {
+        return alert('Sorry! Game Over')
+      }
       setSnake(updatedSnakePosition)
     }
-    document.addEventListener('keydown', onPressArrow(KEYBOARD_ARROW_DIRECTION.DOWN));
-    document.addEventListener('keyup', onPressArrow(KEYBOARD_ARROW_DIRECTION.UP));
+    document.addEventListener('keydown', onPressArrow);
     return () => {
       document.removeEventListener('keydown', onPressArrow)
     }
-  }, [snake])
+  }, [snake, food])
+
+
 
   if (!board.length) {
     return <p>Loading</p>
