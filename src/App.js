@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const BOARD_SIZE = 9
 
@@ -99,7 +99,7 @@ const isSnakeAndFoodSharesSameCell = (snake, food) => {
 }
 
 function App() {
-  const [board, setBoard] = useState(getBoard())
+  const board = useRef(getBoard()).current
   const [score, setScore] = useState(0)
   const [snake, setSnake] = useState(startSnakeAtRandomCell())
   const [food, setFood] = useState(startFoodAtRandomCell(snake))
