@@ -12,11 +12,29 @@ const KEYBOARD_ARROW_DIRECTION = {
 }
 
 class Node {
-  constructor() {
-    this.value = ''
+  constructor(value) {
+    this.value = value
     this.next = null
   }
 }
+
+class LinkedList {
+  constructor() {
+    this.head = null
+  }
+  add(value) {
+    if (this.head == null) {
+      this.head = new Node(value)
+    } else {
+      let currentNode = this.head
+      while (currentNode.next) {
+        currentNode = currentNode.next
+      }
+      currentNode.next = new Node(value)
+    }
+  }
+}
+
 
 const getBoard = () => {
   const board = []
@@ -51,7 +69,7 @@ const startFoodAtRandomCell = (snake) => {
 const startSnakeAtRandomCell = () => {
   const row = getValidCell(1000)
   const col = getValidCell(1000)
-  return [row, col]
+  return new Node([row, col])
 }
 
 const getUpdatedDirection = (direction, row, col) => {
