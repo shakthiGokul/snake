@@ -98,11 +98,28 @@ const isSnakeAndFoodSharesSameCell = (snake, food) => {
   return snake.toString() === food.toString()
 }
 
+const isSnakeAteOwnBody =(head , currentSnakeLocation)=>{
+  let currentNode = head
+  while (currentNode) {
+    if (currentNode.value.toString() === currentSnakeLocation.toString()) {
+      return true
+    }
+    currentNode = currentNode.next
+  }
+  return false
+}
+
 function App() {
   const board = useRef(getBoard()).current
   const [score, setScore] = useState(0)
   const [snake, setSnake] = useState(startSnakeAtRandomCell())
   const [food, setFood] = useState(startFoodAtRandomCell(snake))
+
+  const resetGame = ()=>{
+    setScore(0)
+    setSnake(startSnakeAtRandomCell())
+    setFood(startFoodAtRandomCell(snake))
+  }
 
 
   useEffect(() => {
@@ -110,8 +127,9 @@ function App() {
     const onPressArrow = (event) => {
       const updatedSnakePosition = getUpdatedDirection(event.key, currentSnakeRow, currentSnakeCol)
       const [updatedRow, updatedCol] = updatedSnakePosition
-      if (inValidCell(updatedRow, updatedCol)) {
-        return alert(`$Sorry! Game Over ${score}`)
+      if (inValidCell(updatedRow, updatedCol) || isSnakeAteOwnBody(snake.head , updatedSnakePosition)) {
+         alert(`$Sorry! Game Over ${score}`)
+         return resetGame()
       }
       const newHead = new Node(updatedSnakePosition)
       newHead.next = snake.head
