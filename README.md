@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# 🐍 Snake Game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A classic Snake game built with **React JS**, using a **linked list** data structure to model the snake's body. Move the snake, eat the food, grow longer — but don't crash into the walls or yourself.
 
-## Available Scripts
+<p align="center">
+  <img src="./assets/snake-demo.gif" alt="Snake game demo" width="600" />
+</p>
 
-In the project directory, you can run:
+## ✨ Features
 
-### `npm start`
+- 🧠 **Linked list–based snake body** — each segment is a node, head and tail are tracked for O(1) movement and growth
+- 🎯 Random food spawning with collision-safe placement
+- 📊 Live score counter
+- 💥 Wall and self-collision detection
+- ⌨️ Smooth keyboard controls
+- ⚛️ Built end-to-end in vanilla React (no game engine)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🧩 Why a Linked List?
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+A snake is the textbook use case for a singly linked list:
 
-### `npm test`
+- **Move** → add a new head node, drop the tail node — O(1) on both ends
+- **Grow** → just skip the tail removal step on the tick the snake eats food
+- **Render** → traverse head → tail to draw each segment
+- **Self-collision check** → walk the list and compare against the new head position
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This avoids the cost of shifting an array every frame and makes the game logic map naturally to the data model.
 
-### `npm run build`
+## 🛠️ Tech Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **React JS** (Create React App)
+- **JavaScript (ES6+)**
+- **HTML5 & CSS3**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🎮 Controls
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Key | Action       |
+| --- | ------------ |
+| ⬆️  | Move up      |
+| ⬇️  | Move down    |
+| ⬅️  | Move left    |
+| ➡️  | Move right   |
 
-### `npm run eject`
+## 🚀 Getting Started
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+# Clone the repo
+git clone https://github.com/shakthiGokul/snake.git
+cd snake
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Install dependencies
+npm install
+# or
+yarn install
 
-## Learn More
+# Start the dev server
+npm start
+# or
+yarn start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Build for Production
 
-### Code Splitting
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📁 Project Structure
 
-### Analyzing the Bundle Size
+```
+snake/
+├── public/          # Static assets
+├── src/             # React components & game logic
+│   ├── components/  # UI components
+│   └── utils/       # Linked list and game helpers
+├── assets/          # Demo media
+└── package.json
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🧠 What I Learned
 
-### Making a Progressive Web App
+- Mapping a classic data structure (linked list) onto a real-world game loop
+- Managing game state and ticks inside React without re-render thrashing
+- Keyboard event handling and direction-change debouncing
+- Collision detection and bounds checking
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 👤 Author
 
-### Advanced Configuration
+**Shakthi Gokul VP**
+- GitHub: [@shakthiGokul](https://github.com/shakthiGokul)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📝 License
 
-### Deployment
+This project is open source and available for learning purposes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+*Built as a fun side project to explore data structures in a React app* 🎉

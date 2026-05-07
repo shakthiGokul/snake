@@ -179,7 +179,7 @@ function App() {
       <main>
         <div> <p>Score : {`${score}`}</p></div>
         <div className='board-container'>
-          {board.map((row, i) => <div key={i} className='board-row'>{row.map((col, j) => <div key={j} className={getBoardCell(col)}>{col}</div>)}</div>)}
+          {board.map((row, i) => <div key={i} className='board-row'>{row.map((col, j) => <div key={j} className={getBoardCell(col)}></div>)}</div>)}
         </div>
       </main >
     </div >
